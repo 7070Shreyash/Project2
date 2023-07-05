@@ -5,8 +5,8 @@ import User from "../models/User";
 
 export const createQues = async(req,res) => {
     try {
-        const { userId, description , picturePath } = req.body;
-
+        const {userId} = req.params;
+        const {description , picturePath } = req.body;
         const user = await User.findById(userId) ;
 
         const newQues = new Ques({
@@ -58,10 +58,10 @@ export const getUserQues = async (req,res) => {
 
 export const upVote = async (req,res) => {
     try {
-        const { id } = req.params ;
+        const { quesId } = req.params ;
         const { userId } = req.body;
 
-        const ques = await Ques.findById(id) ;
+        const ques = await Ques.findById(quesId) ;
 
         const isUpVoted = ques.upVote.get(userId) ;
 
@@ -72,7 +72,7 @@ export const upVote = async (req,res) => {
         }
 
         const updatedQues = await Ques.findByIdAndUpdate(
-            id,
+            quesId,
             {upVote : ques.upVote} ,
             {new : true}
         ) ;
@@ -85,13 +85,12 @@ export const upVote = async (req,res) => {
 };
 
 
-
 export const downVote = async (req,res) => {
     try {
-        const { id } = req.params ;
+        const { quesId } = req.params ;
         const { userId } = req.body;
 
-        const ques = await Ques.findById(id) ;
+        const ques = await Ques.findById(quesId) ;
 
         const isDownVoted = ques.downVote.get(userId) ;
 
@@ -102,7 +101,7 @@ export const downVote = async (req,res) => {
         }
 
         const updatedQues = await Ques.findByIdAndUpdate(
-            id,
+            quesId,
             {downVote : ques.downVote} ,
             {new : true}
         ) ;
@@ -114,11 +113,11 @@ export const downVote = async (req,res) => {
     }
 };
 
+
 export const ansQues = async(req,res) => {
     try {
-        const { quesId , answer } = req.body ;
-        const { userId } = req.params;
-
+        const { userId , answer } = req.body ;
+        const { quesId } = req.params;
         const ques = await Ques.findById(quesId) ;
         const user = await User.findById(userId) ;
 

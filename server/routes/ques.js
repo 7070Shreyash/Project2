@@ -6,14 +6,14 @@ const router = express.Router() ;
 
 router.get("/",verifyToken,getFeedQues) ;
 
-router.get("/:userId/ques",verifyToken,getUserQues) ;
+router.get("/:userId",verifyToken,getUserQues);
 
-router.patch("/:id/upvote",verifyToken,upVote) ;
+router.patch("/:quesId/upvote",verifyToken,upVote);
 
-router.patch("/:id/downvote",verifyToken,downVote);
+router.patch("/:quesId/downvote",verifyToken,downVote);
 
-router.post("/",verifyToken,createQues);
+router.post("/:userId",verifyToken,createQues);
 
-router.post("/:id/answer",verifyToken,ansQues);
+router.post("/:quesId/answer",verifyToken,ansQues);
 
 export default router ;
